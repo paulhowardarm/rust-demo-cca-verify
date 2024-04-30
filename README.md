@@ -1,2 +1,43 @@
 # rust-demo-cca-verify
 Simple standalone Rust program to show how to verify a CCA attestation token from Rust code.
+
+## Set-Up
+This code builds to a standalone console Rust program that can be invoked without any command-line arguments. The sample data is all hard-coded into the source.
+
+The program requires a Veraison service with its verification endpoint published to port 8080 on the local host.
+
+To achieve this, follow the steps documented to create a Docker deployment of Veraison [here](https://github.com/veraison/services/blob/main/README.md).
+
+Once Veraison is running, you will need to provision some sample endorsements for a CCA platform. These are provided as part of Veraison's end-to-end demo script. Follow the steps [here](https://github.com/veraison/services/blob/main/end-to-end/README.md) as far as provisioning the endorsements. Ensure that your shell has the `SCHEME` environment variable set to `cca`.
+
+You are now ready to run the example.
+
+## Running This Example
+Once the prerequisites above are satisfied, run this example program using:
+
+```
+cargo run
+```
+
+Output from a successful run should look roughly as follows:
+
+```
+server challenge: [65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66, 65, 66]
+acceptable media types: [
+    "application/vnd.parallaxsecond.key-attestation.cca",
+    "application/psa-attestation-token",
+    "application/pem-certificate-chain",
+    "application/vnd.enacttrust.tpm-evidence",
+    "application/eat-collection; profile=http://arm.com/CCA-SSD/1.0.0",
+    "application/vnd.parallaxsecond.key-attestation.tpm",
+    "application/eat-cwt; profile=http://arm.com/psa/2.0.0",
+]
+Attestation result from Veraison verification endpoint: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXIudmVyaWZpZXItaWQiOnsiYnVpbGQiOiJOL0EiLCJkZXZlbG9wZXIiOiJWZXJhaXNvbiBQcm9qZWN0In0sImVhdF9ub25jZSI6IlFVSkJRa0ZDUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFnPT0iLCJlYXRfcHJvZmlsZSI6InRhZzpnaXRodWIuY29tLDIwMjM6dmVyYWlzb24vZWFyIiwiaWF0IjoxNzE0NDY3MTA5LCJzdWJtb2RzIjp7IkNDQV9TU0RfUExBVEZPUk0iOnsiZWFyLmFwcHJhaXNhbC1wb2xpY3ktaWQiOiJwb2xpY3k6Q0NBX1NTRF9QTEFURk9STSIsImVhci5zdGF0dXMiOiJhZmZpcm1pbmciLCJlYXIudHJ1c3R3b3J0aGluZXNzLXZlY3RvciI6eyJjb25maWd1cmF0aW9uIjoyLCJleGVjdXRhYmxlcyI6MiwiZmlsZS1zeXN0ZW0iOjAsImhhcmR3YXJlIjoyLCJpbnN0YW5jZS1pZGVudGl0eSI6MiwicnVudGltZS1vcGFxdWUiOjIsInNvdXJjZWQtZGF0YSI6MCwic3RvcmFnZS1vcGFxdWUiOjJ9LCJlYXIudmVyYWlzb24uYW5ub3RhdGVkLWV2aWRlbmNlIjp7InBsYXRmb3JtIjp7ImNjYS1wbGF0Zm9ybS1jaGFsbGVuZ2UiOiJCZWExaUVUR29NMFpPQ0JwdXYydzVKUm1LanJjK1AzaEZIanBNNVVhOFhrUDlkNWNlT1BiRVNQYUNpQjZpMlpWYmdvaThaN21TOXd2aVpVN2F6SlZYdz09IiwiY2NhLXBsYXRmb3JtLWNvbmZpZyI6IkFRSUQiLCJjY2EtcGxhdGZvcm0taGFzaC1hbGdvLWlkIjoic2hhLTI1NiIsImNjYS1wbGF0Zm9ybS1pbXBsZW1lbnRhdGlvbi1pZCI6IkFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUE9IiwiY2NhLXBsYXRmb3JtLWluc3RhbmNlLWlkIjoiQVFJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUMiLCJjY2EtcGxhdGZvcm0tbGlmZWN5Y2xlIjoxMjI4OCwiY2NhLXBsYXRmb3JtLXByb2ZpbGUiOiJodHRwOi8vYXJtLmNvbS9DQ0EtU1NELzEuMC4wIiwiY2NhLXBsYXRmb3JtLXNlcnZpY2UtaW5kaWNhdG9yIjoiaHR0cHM6Ly92ZXJhaXNvbi5leGFtcGxlL3YxL2NoYWxsZW5nZS1yZXNwb25zZSIsImNjYS1wbGF0Zm9ybS1zdy1jb21wb25lbnRzIjpbeyJtZWFzdXJlbWVudC10eXBlIjoiQkwiLCJtZWFzdXJlbWVudC12YWx1ZSI6IkJ3WUZCQU1DQVFBUERnME1Dd29KQ0JjV0ZSUVRFaEVRSHg0ZEhCc2FHUmc9Iiwic2lnbmVyLWlkIjoiQndZRkJBTUNBUUFQRGcwTUN3b0pDQmNXRlJRVEVoRVFIeDRkSEJzYUdSZz0iLCJ2ZXJzaW9uIjoiMy40LjIifSx7Im1lYXN1cmVtZW50LXR5cGUiOiJNMSIsIm1lYXN1cmVtZW50LXZhbHVlIjoiQ3dZRkJBTUNBUUFQRGcwTUN3b0pDQmNXRlJRVEVoRVFIeDRkSEJzYUdSZz0iLCJzaWduZXItaWQiOiJCd1lGQkFNQ0FRQVBEZzBNQ3dvSkNCY1dGUlFURWhFUUh4NGRIQnNhR1JnPSIsInZlcnNpb24iOiIxLjIuMCJ9LHsibWVhc3VyZW1lbnQtdHlwZSI6Ik0yIiwibWVhc3VyZW1lbnQtdmFsdWUiOiJEd1lGQkFNQ0FRQVBEZzBNQ3dvSkNCY1dGUlFURWhFUUh4NGRIQnNhR1JnPSIsInNpZ25lci1pZCI6IkJ3WUZCQU1DQVFBUERnME1Dd29KQ0JjV0ZSUVRFaEVRSHg0ZEhCc2FHUmc9IiwidmVyc2lvbiI6IjEuMi4zIn0seyJtZWFzdXJlbWVudC10eXBlIjoiTTMiLCJtZWFzdXJlbWVudC12YWx1ZSI6IkV3WUZCQU1DQVFBUERnME1Dd29KQ0JjV0ZSUVRFaEVRSHg0ZEhCc2FHUmc9Iiwic2lnbmVyLWlkIjoiQndZRkJBTUNBUUFQRGcwTUN3b0pDQmNXRlJRVEVoRVFIeDRkSEJzYUdSZz0iLCJ2ZXJzaW9uIjoiMS4wLjAifV19LCJyZWFsbSI6eyJjY2EtcmVhbG0tY2hhbGxlbmdlIjoiUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFrRkNRVUpCUWtGQ1FVSkJRa0ZDUVVKQlFrRkNRVUpCUWc9PSIsImNjYS1yZWFsbS1leHRlbnNpYmxlLW1lYXN1cmVtZW50cyI6WyJRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRdz09IiwiUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUXc9PSIsIlEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFF3PT0iLCJRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRdz09Il0sImNjYS1yZWFsbS1oYXNoLWFsZ28taWQiOiJzaGEtMjU2IiwiY2NhLXJlYWxtLWluaXRpYWwtbWVhc3VyZW1lbnQiOiJRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRdz09IiwiY2NhLXJlYWxtLXBlcnNvbmFsaXphdGlvbi12YWx1ZSI6IlFVUkJSRUZFUVVSQlJFRkVRVVJCUkVGRVFVUkJSRUZFUVVSQlJFRkVRVVJCUkVGRVFVUkJSRUZFUVVSQlJFRkVRVVJCUkVGRVFVUkJSRUZFUVVSQlJBPT0iLCJjY2EtcmVhbG0tcHVibGljLWtleSI6IkJJTDcwVEtwdGNPV2g1KzdGVFFOa0ZDWGpsWEhuVko1b3JvT2xZVlBOK0lNMHZaUE8zSzFjTHZYYys3aXpuYUVKZTMxUmUyK2lmK3Y0T2xydlViaWNQSUhsc1JJdVkydlJxZGswblJDNXVidGhQak95QmZtN01hbkhUbzk1OVorelE9PSIsImNjYS1yZWFsbS1wdWJsaWMta2V5LWhhc2gtYWxnby1pZCI6InNoYS01MTIifX19fX0.YV_KwCVvT2il31DY1PwuoJIv37mIzhDLHfgX40GxdVJ4J87aXw3eLTOIhfYdnGRax6J4yoDsATROQRF_XYR58w
+EAR profiles: tag:github.com,2023:veraison/ear
+Appraisal for submod CCA_SSD_PLATFORM:
+    Status: Affirming
+    Annotated Evidence:
+        platform: Map([(Text("cca-platform-challenge"), Text("Bea1iETGoM0ZOCBpuv2w5JRmKjrc+P3hFHjpM5Ua8XkP9d5ceOPbESPaCiB6i2ZVbgoi8Z7mS9wviZU7azJVXw==")), (Text("cca-platform-config"), Text("AQID")), (Text("cca-platform-hash-algo-id"), Text("sha-256")), (Text("cca-platform-implementation-id"), Text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")), (Text("cca-platform-instance-id"), Text("AQICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC")), (Text("cca-platform-lifecycle"), Integer(12288)), (Text("cca-platform-profile"), Text("http://arm.com/CCA-SSD/1.0.0")), (Text("cca-platform-service-indicator"), Text("https://veraison.example/v1/challenge-response")), (Text("cca-platform-sw-components"), Array([Map([(Text("measurement-type"), Text("BL")), (Text("measurement-value"), Text("BwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("signer-id"), Text("BwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("version"), Text("3.4.2"))]), Map([(Text("measurement-type"), Text("M1")), (Text("measurement-value"), Text("CwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("signer-id"), Text("BwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("version"), Text("1.2.0"))]), Map([(Text("measurement-type"), Text("M2")), (Text("measurement-value"), Text("DwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("signer-id"), Text("BwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("version"), Text("1.2.3"))]), Map([(Text("measurement-type"), Text("M3")), (Text("measurement-value"), Text("EwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("signer-id"), Text("BwYFBAMCAQAPDg0MCwoJCBcWFRQTEhEQHx4dHBsaGRg=")), (Text("version"), Text("1.0.0"))])]))])
+        realm: Map([(Text("cca-realm-challenge"), Text("QUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQkFCQUJBQg==")), (Text("cca-realm-extensible-measurements"), Array([Text("Q0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQw=="), Text("Q0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQw=="), Text("Q0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQw=="), Text("Q0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQw==")])), (Text("cca-realm-hash-algo-id"), Text("sha-256")), (Text("cca-realm-initial-measurement"), Text("Q0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQw==")), (Text("cca-realm-personalization-value"), Text("QURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBREFEQURBRA==")), (Text("cca-realm-public-key"), Text("BIL70TKptcOWh5+7FTQNkFCXjlXHnVJ5oroOlYVPN+IM0vZPO3K1cLvXc+7iznaEJe31Re2+if+v4OlrvUbicPIHlsRIuY2vRqdk0nRC5ubthPjOyBfm7ManHTo959Z+zQ==")), (Text("cca-realm-public-key-hash-algo-id"), Text("sha-512"))])
+    Policy Claims:
+```
