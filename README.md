@@ -4,9 +4,9 @@ Simple standalone Rust program to show how to verify a CCA attestation token fro
 ## Set-Up
 This code builds to a standalone console Rust program that can be invoked without any command-line arguments. The sample data is all hard-coded into the source.
 
-The program requires a Veraison service with its verification endpoint published to port 8080 on the local host.
+The program requires a Veraison service to use as the verifier. By default, it will use the service published by Linaro at `http://veraison.test.linaro.org:8080`. To use this service, simply compile and run the example exactly as it is. There is no need for any additional set-up.
 
-To achieve this, follow the steps documented to create a Docker deployment of Veraison [here](https://github.com/veraison/services/blob/main/README.md).
+To use your own Veraison service instead, follow the steps documented to create a Docker deployment of Veraison [here](https://github.com/veraison/services/blob/main/README.md).
 
 Once Veraison is running, you will need to provision some sample endorsements for a CCA platform. These are provided as part of Veraison's end-to-end demo script. Follow the steps [here](https://github.com/veraison/services/blob/main/end-to-end/README.md) as far as provisioning the endorsements. Ensure that your shell has the `SCHEME` environment variable set to `cca`.
 
