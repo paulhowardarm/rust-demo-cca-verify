@@ -190,7 +190,7 @@ fn my_evidence_builder(nonce: &[u8], accept: &[String]) -> Result<(Vec<u8>, Stri
             0x30, 0x97,
         ],
         // This is a CCA EAT profile token
-        "application/eat-collection; profile=http://arm.com/CCA-SSD/1.0.0".to_string(),
+        "application/eat-collection; profile=\"http://arm.com/CCA-SSD/1.0.0\"".to_string(),
     ))
 }
 
